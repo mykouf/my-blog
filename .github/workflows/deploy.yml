@@ -26,10 +26,6 @@ jobs:
 
       - name: Deploy to VPS
         shell: bash
-        env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USER }}
-          VPS_TARGET: ${{ secrets.VPS_TARGET }}
         run: |
           set -e
           # Setup SSH key
@@ -37,10 +33,8 @@ jobs:
           chmod 700 ~/.ssh
           echo "${{ secrets.VPS_SSH_KEY }}" | base64 -d > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -p 10022 -H "${VPS_HOST}" >> ~/.ssh/known_hosts 2>/dev/null
+          ssh-keyscan -p 10022 -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
 
-          # Ensure target directory exists
-          ssh -p 10022 -o StrictHostKeyChecking=no "${VPS_USER}@${VPS_HOST}" "mkdir -p ${VPS_TARGET}"
-
-          # Deploy via tar over SSH (no rsync needed)
-          tar czf - -C ./public . | ssh -p 10022 -o StrictHostKeyChecking=no "${VPS_USER}@${VPS_HOST}" "tar xzf - -C ${VPS_TARGET}"
+          # Copy files using scp (the trailing dot copies directory contents)
+          ssh -p 10022 -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/blog"
+          scp -P 10022 -o StrictHostKeyChecking=no -qr ./public/. ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/blog/
