@@ -1,3 +1,12 @@
-baseURL = 'https://example.org/'
-locale = 'en-us'
-title = 'My New Hugo Project'
+baseURL = "https://你的域名.com"
+languageCode = "zh-CN"
+title = "我的技术博客"
+theme = "PaperMod"
+paginate = 10
+enableInlineShortcodes = true
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+enableEmoji = true
+pygmentsUseClasses = true
