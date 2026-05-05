@@ -24,10 +24,17 @@ jobs:
       - name: Build
         run: hugo --minify
 
-      - name: Deploy to VPS via rsync
+      - name: Deploy to VPS
+        shell: bash
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_TARGET: ${{ secrets.VPS_TARGET }}
         run: |
+          set -e
           mkdir -p ~/.ssh
-          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 700 ~/.ssh
+          printf '%s' "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -p 10022 -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
-          rsync -avz --delete -e 'ssh -p 10022' ./public/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.VPS_TARGET }}
+          ssh-keyscan -p 10022 -H "${VPS_HOST}" >> ~/.ssh/known_hosts 2>/dev/null
+          rsync -avz --delete -e 'ssh -p 10022 -o StrictHostKeyChecking=no' ./public/ "${VPS_USER}@${VPS_HOST}:${VPS_TARGET}"
