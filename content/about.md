@@ -10,5 +10,5 @@ slug: "about"
 
 ## 联系方式
 
-- GitHub: [你的用户名](https://github.com/你的用户名)
-- Email: 你的邮箱@example.com
+- GitHub: [mykouf](https://github.com/mykouf)
+- Email: mykouf@gmail.com
