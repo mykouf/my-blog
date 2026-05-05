@@ -1,5 +1,5 @@
 baseURL = "https://你的域名.com"
-languageCode = "zh-CN"
+locale = "zh-CN"
 title = "我的技术博客"
 theme = "PaperMod"
 paginate = 10
@@ -10,3 +10,78 @@ buildFuture = false
 buildExpired = false
 enableEmoji = true
 pygmentsUseClasses = true
+
+[params]
+  env = "production"
+  title = "我的技术博客"
+  description = "个人技术博客"
+  keywords = ["Blog", "Tech", "PaperMod"]
+  author = "你的名字"
+  DateFormat = "2006-01-02"
+  defaultTheme = "light"
+  disableThemeToggle = false
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowRssButtonInSectionTermList = false
+  UseHugoToc = true
+  disableSpecial1stPost = false
+  disableScrollToTop = false
+  comments = false
+  hidemeta = false
+  hideSummary = false
+  showtoc = true
+  tocopen = false
+
+  # Utterances 评论（稍后配置具体 repo）
+  [params.utterances]
+    repo = "你的GitHub用户名/你的博客仓库名"
+    issueTerm = "pathname"
+    label = "💬 评论"
+    theme = "github-light"
+
+  # 主页信息
+  [params.homeInfoParams]
+    Title = "你好！👋"
+    Content = "欢迎来到我的技术博客，分享技术与思考。"
+
+  # 社交链接
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/你的用户名"
+  [[params.socialIcons]]
+    name = "email"
+    url = "mailto:你的邮箱@example.com"
+
+# 菜单导航
+[languages.zh]
+  label = "中文"
+  weight = 1
+  [languages.zh.menu]
+    [[languages.zh.menu.main]]
+      identifier = "search"
+      name = "🔍 搜索"
+      url = "/search/"
+      weight = 10
+    [[languages.zh.menu.main]]
+      identifier = "archives"
+      name = "📚 归档"
+      url = "/archives/"
+      weight = 20
+    [[languages.zh.menu.main]]
+      identifier = "tags"
+      name = "🏷️ 标签"
+      url = "/tags/"
+      weight = 30
+    [[languages.zh.menu.main]]
+      identifier = "about"
+      name = "👤 关于"
+      url = "/about/"
+      weight = 40
+
+# 搜索配置
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
